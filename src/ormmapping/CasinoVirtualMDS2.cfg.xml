@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Daniel Landa
+License Type: Purchased
+-->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+ "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+   	<!-- properties -->
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://equipo8wserver.cloudapp.net:8081/casinovirtual</property>
+		<property name="connection.username">mds2</property>
+		<property name="connection.password">Modelado-2</property>
+		<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+		<property name="hibernate.c3p0.acquire_increment">1</property>
+		<property name="hibernate.c3p0.idle_test_period">0</property>
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">15</property>
+		<property name="hibernate.c3p0.timeout">0</property>
+		<property name="show_sql">false</property>
+		<property name="query.substitutions">true 1, false 0, yes 'Y', no 'N'</property>
+		<!-- mapping files -->
+		<mapping resource="ormmapping/basededatos/Chat.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/DatosConfiguracion.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/Fecha.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/Juego.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/PersonalAplicacion.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/QuejaUsuario.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/UsuarioRegistrado.hbm.xml" />
+		<mapping resource="ormmapping/basededatos/UsuariosNoRegistrados.hbm.xml" />
+	</session-factory>
+</hibernate-configuration>

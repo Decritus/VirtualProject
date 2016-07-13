@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Daniel Landa
+License Type: Purchased
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="basededatos.UsuarioRegistrado" table="UsuarioRegistrado" lazy="false">
+		<id name="idDNI" column="IdDNI" type="string">
+			<generator class="assigned">
+			</generator>
+		</id>
+		<property name="nombreUsuario" column="NombreUsuario" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="contrasena" column="Contrasena" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="preguntaSecreta" column="PreguntaSecreta" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="respuestaSecreta" column="RespuestaSecreta" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="email" column="Email" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="numCuenta" column="NumCuenta" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="ganancias" column="Ganancias" type="long" length="20" not-null="true" lazy="false"/>
+		<property name="foto" column="Foto" type="string" length="255" not-null="false" lazy="false"/>
+		<set name="ORM_Escribe" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="UsuarioRegistradoIdDNI" not-null="true"/>
+			<one-to-many class="basededatos.Chat"/>
+		</set>
+		<set name="ORM_Fechas" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="UsuarioRegistradoIdDNI" not-null="true"/>
+			<one-to-many class="basededatos.Fecha"/>
+		</set>
+		<set name="ORM_Reporta" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="UsuarioRegistradoIdDNI" not-null="true"/>
+			<one-to-many class="basededatos.QuejaUsuario"/>
+		</set>
+		<set name="ORM_Favorito" table="UsuarioRegistrado_Juego" lazy="true" cascade="save-update,lock">
+			<key column="UsuarioRegistradoIdDNI" not-null="true"/>
+			<many-to-many column="JuegoIdJuego" class="basededatos.Juego">
+			</many-to-many>
+		</set>
+		<joined-subclass name="basededatos.UsuarioInhabilitado" table="UsuarioInhabilitado" lazy="false">
+			<key>
+				<column name="UsuarioRegistradoIdDNI"/>
+			</key>
+			<property name="fechaInhabilitado" column="FechaInhabilitado" type="date" not-null="false" lazy="false"/>
+			<property name="tiempoInhabilitacion" column="TiempoInhabilitacion" type="integer" length="11" not-null="true" lazy="false"/>
+			<component name="esDe" class="basededatos.BDUsuariosInhabilitados" update="true" insert="true">
+				<component name="esDe" class="basededatos.BDPrincipal" update="true" insert="true">
+					<component name="deJuegos" class="basededatos.BDJuegos" update="true" insert="true">
+					</component>
+					<component name="deUserNR" class="basededatos.BDUsuariosNoRegistrados" update="true" insert="true">
+					</component>
+					<component name="deAdmin" class="basededatos.BDAdministradores" update="true" insert="true">
+					</component>
+					<component name="dePersonalAtencion" class="basededatos.BDPersonalDeAtencionAlUsuario" update="true" insert="true">
+					</component>
+					<component name="deQuejas" class="basededatos.BDQuejasUsuarios" update="true" insert="true">
+					</component>
+					<component name="deChat" class="basededatos.BDChats" update="true" insert="true">
+					</component>
+					<component name="deUserActiv" class="basededatos.BDUsuariosActivados" update="true" insert="true">
+					</component>
+					<component name="deUserInac" class="basededatos.BDUsuariosInactivos" update="true" insert="true">
+					</component>
+					<component name="deUserExpul" class="basededatos.BDUsuariosExpulsados" update="true" insert="true">
+					</component>
+					<component name="dePublico" class="basededatos.BDPublicos" update="true" insert="true">
+					</component>
+				</component>
+			</component>
+		</joined-subclass>
+		<joined-subclass name="basededatos.UsuarioActivado" table="UsuarioActivado" lazy="false">
+			<key>
+				<column name="UsuarioRegistradoIdDNI"/>
+			</key>
+			<property name="fechaAlta" column="FechaAlta" type="date" not-null="false" lazy="false"/>
+			<component name="esDe" class="basededatos.BDUsuariosActivados" update="true" insert="true">
+				<component name="esDe" class="basededatos.BDPrincipal" update="true" insert="true">
+					<component name="deJuegos" class="basededatos.BDJuegos" update="true" insert="true">
+					</component>
+					<component name="deInhabilitados" class="basededatos.BDUsuariosInhabilitados" update="true" insert="true">
+					</component>
+					<component name="deUserNR" class="basededatos.BDUsuariosNoRegistrados" update="true" insert="true">
+					</component>
+					<component name="deAdmin" class="basededatos.BDAdministradores" update="true" insert="true">
+					</component>
+					<component name="dePersonalAtencion" class="basededatos.BDPersonalDeAtencionAlUsuario" update="true" insert="true">
+					</component>
+					<component name="deQuejas" class="basededatos.BDQuejasUsuarios" update="true" insert="true">
+					</component>
+					<component name="deChat" class="basededatos.BDChats" update="true" insert="true">
+					</component>
+					<component name="deUserInac" class="basededatos.BDUsuariosInactivos" update="true" insert="true">
+					</component>
+					<component name="deUserExpul" class="basededatos.BDUsuariosExpulsados" update="true" insert="true">
+					</component>
+					<component name="dePublico" class="basededatos.BDPublicos" update="true" insert="true">
+					</component>
+				</component>
+			</component>
+		</joined-subclass>
+		<joined-subclass name="basededatos.UsuarioExpulsado" table="UsuarioExpulsado" lazy="false">
+			<key>
+				<column name="UsuarioRegistradoIdDNI"/>
+			</key>
+			<property name="fechaExpulsion" column="FechaExpulsion" type="date" not-null="false" lazy="false"/>
+			<property name="tiempoExpulsion" column="TiempoExpulsion" type="integer" length="11" not-null="true" lazy="false"/>
+			<property name="numExpulsiones" column="NumExpulsiones" type="integer" length="11" not-null="true" lazy="false"/>
+			<component name="esDe" class="basededatos.BDUsuariosExpulsados" update="true" insert="true">
+				<component name="esDe" class="basededatos.BDPrincipal" update="true" insert="true">
+					<component name="deJuegos" class="basededatos.BDJuegos" update="true" insert="true">
+					</component>
+					<component name="deInhabilitados" class="basededatos.BDUsuariosInhabilitados" update="true" insert="true">
+					</component>
+					<component name="deUserNR" class="basededatos.BDUsuariosNoRegistrados" update="true" insert="true">
+					</component>
+					<component name="deAdmin" class="basededatos.BDAdministradores" update="true" insert="true">
+					</component>
+					<component name="dePersonalAtencion" class="basededatos.BDPersonalDeAtencionAlUsuario" update="true" insert="true">
+					</component>
+					<component name="deQuejas" class="basededatos.BDQuejasUsuarios" update="true" insert="true">
+					</component>
+					<component name="deChat" class="basededatos.BDChats" update="true" insert="true">
+					</component>
+					<component name="deUserActiv" class="basededatos.BDUsuariosActivados" update="true" insert="true">
+					</component>
+					<component name="deUserInac" class="basededatos.BDUsuariosInactivos" update="true" insert="true">
+					</component>
+					<component name="dePublico" class="basededatos.BDPublicos" update="true" insert="true">
+					</component>
+				</component>
+			</component>
+		</joined-subclass>
+		<joined-subclass name="basededatos.UsuarioInactivo" table="UsuarioInactivo" lazy="false">
+			<key>
+				<column name="UsuarioRegistradoIdDNI"/>
+			</key>
+			<property name="fechaInicioBaja" column="FechaInicioBaja" type="date" not-null="false" lazy="false"/>
+			<property name="fechaFinBaja" column="FechaFinBaja" type="date" not-null="false" lazy="false"/>
+			<component name="esDe" class="basededatos.BDUsuariosInactivos" update="true" insert="true">
+				<component name="esDe" class="basededatos.BDPrincipal" update="true" insert="true">
+					<component name="deJuegos" class="basededatos.BDJuegos" update="true" insert="true">
+					</component>
+					<component name="deInhabilitados" class="basededatos.BDUsuariosInhabilitados" update="true" insert="true">
+					</component>
+					<component name="deUserNR" class="basededatos.BDUsuariosNoRegistrados" update="true" insert="true">
+					</component>
+					<component name="deAdmin" class="basededatos.BDAdministradores" update="true" insert="true">
+					</component>
+					<component name="dePersonalAtencion" class="basededatos.BDPersonalDeAtencionAlUsuario" update="true" insert="true">
+					</component>
+					<component name="deQuejas" class="basededatos.BDQuejasUsuarios" update="true" insert="true">
+					</component>
+					<component name="deChat" class="basededatos.BDChats" update="true" insert="true">
+					</component>
+					<component name="deUserActiv" class="basededatos.BDUsuariosActivados" update="true" insert="true">
+					</component>
+					<component name="deUserExpul" class="basededatos.BDUsuariosExpulsados" update="true" insert="true">
+					</component>
+					<component name="dePublico" class="basededatos.BDPublicos" update="true" insert="true">
+					</component>
+				</component>
+			</component>
+		</joined-subclass>
+	</class>
+</hibernate-mapping>

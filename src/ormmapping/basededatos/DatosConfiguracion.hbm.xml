@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Daniel Landa
+License Type: Purchased
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="basededatos.DatosConfiguracion" table="DatosConfiguracion" lazy="false">
+		<id name="idDatosConfiguracion" column="IdDatosConfiguracion" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<property name="partidasSimultaneas" column="PartidasSimultaneas" type="integer" length="11" not-null="true" lazy="false"/>
+	</class>
+</hibernate-mapping>

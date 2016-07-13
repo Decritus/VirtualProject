@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Daniel Landa
+License Type: Purchased
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="basededatos.Fecha" table="Fecha" lazy="false">
+		<id name="idFecha" column="IdFecha" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<many-to-one name="ORM_Juego" cascade="lock" column="JuegoIdJuego" class="basededatos.Juego" not-null="true" lazy="false">
+		</many-to-one>
+		<many-to-one name="ORM_UsuarioRegistrado" cascade="lock" column="UsuarioRegistradoIdDNI" class="basededatos.UsuarioRegistrado" not-null="true" lazy="false">
+		</many-to-one>
+	</class>
+</hibernate-mapping>

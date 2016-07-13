@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Daniel Landa
+License Type: Purchased
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="basededatos.QuejaUsuario" table="QuejaUsuario" lazy="false">
+		<id name="idQueja" column="IdQueja" type="integer" unsaved-value="0">
+			<generator class="native">
+			</generator>
+		</id>
+		<many-to-one name="sonReportadas" cascade="lock" column="UsuarioRegistradoIdDNI" class="basededatos.UsuarioRegistrado" not-null="true" lazy="no-proxy" access="field">
+		</many-to-one>
+		<property name="usuario" column="Usuario" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="asunto" column="Asunto" type="string" length="255" not-null="false" lazy="false"/>
+		<property name="texto" column="Texto" type="string" length="255" not-null="false" lazy="false"/>
+		<component name="esDe" class="basededatos.BDQuejasUsuarios" update="true" insert="true">
+			<component name="esDe" class="basededatos.BDPrincipal" update="true" insert="true">
+				<component name="deJuegos" class="basededatos.BDJuegos" update="true" insert="true">
+				</component>
+				<component name="deInhabilitados" class="basededatos.BDUsuariosInhabilitados" update="true" insert="true">
+				</component>
+				<component name="deUserNR" class="basededatos.BDUsuariosNoRegistrados" update="true" insert="true">
+				</component>
+				<component name="deAdmin" class="basededatos.BDAdministradores" update="true" insert="true">
+				</component>
+				<component name="dePersonalAtencion" class="basededatos.BDPersonalDeAtencionAlUsuario" update="true" insert="true">
+				</component>
+				<component name="deChat" class="basededatos.BDChats" update="true" insert="true">
+				</component>
+				<component name="deUserActiv" class="basededatos.BDUsuariosActivados" update="true" insert="true">
+				</component>
+				<component name="deUserInac" class="basededatos.BDUsuariosInactivos" update="true" insert="true">
+				</component>
+				<component name="deUserExpul" class="basededatos.BDUsuariosExpulsados" update="true" insert="true">
+				</component>
+				<component name="dePublico" class="basededatos.BDPublicos" update="true" insert="true">
+				</component>
+			</component>
+		</component>
+	</class>
+</hibernate-mapping>
